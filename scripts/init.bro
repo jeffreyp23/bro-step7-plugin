@@ -1,6 +1,7 @@
 ###
 ## This is the S7comm plugin's event handler script
 ## Author: Gyorgy Miru
+## Extended By Jeffrey Paul (2017)
 ## Date: 2015.12.17.
 ## Version: 0.3
 
@@ -74,6 +75,8 @@ export {
 		udata:            count      &optional &log;
 		## s7 real data
 		ddata:            double     &optional &log;
+		## s7 bit data
+        bdata:            bool       &optional &log;
 		isread:           bool       &log;
 
     };
@@ -318,4 +321,40 @@ event siemenss7_write_data_real(c: connection, area: count, db: count, s7type: c
 #    print c$s7data;
 
     Log::write(S7comm::LOG3, c$s7data);
+}
+
+event siemenss7_read_data_bit(c: connection, area: count, db: count, s7type: count, address: count, data: bool) &priority=5
+{
+	local s: InfoS7data;
+    s$ts=network_time();
+    s$uid=c$uid;
+    s$id=c$id;
+    s$area=s7area_types[area];
+    s$areanum=area;
+    s$dbnum=db;
+    s$s7type=s7type_types[s7type];
+    s$s7typenum=s7type;
+    s$address=address;
+    s$bdata=data;
+    s$isread=F;
+
+    c$s7data=s;
+}
+
+event siemenss7_write_data_bit(c: connection, area: count, db: count, s7type: count, address: count, data: bool) &priority=5
+{
+	local s: InfoS7data;
+    s$ts=network_time();
+    s$uid=c$uid;
+    s$id=c$id;
+    s$area=s7area_types[area];
+    s$areanum=area;
+    s$dbnum=db;
+    s$s7type=s7type_types[s7type];
+    s$s7typenum=s7type;
+    s$address=address;
+    s$bdata=data;
+    s$isread=F;
+
+    c$s7data=s;
 }

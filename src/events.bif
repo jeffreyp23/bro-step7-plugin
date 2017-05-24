@@ -1,6 +1,7 @@
 ###
 ## Events published by the S7 protocol analyzer plugin
 ## Author: Gyorgy Miru
+## Extended by Jeffrey Paul (2017)
 ## Date: 2015.11.04.
 ## Version: 0.4
 
@@ -21,3 +22,5 @@ event siemenss7_write_data_unsigned%(c: connection, area: count, db: count, s7ty
 event siemenss7_write_data_signed%(c: connection, area: count, db: count, s7type: count, address: count, data: int%);
 event siemenss7_write_data_real%(c: connection, area: count, db: count, s7type: count, address: count, data: double%);
 
+event siemenss7_read_data_bit%(c: connection, area: count, db: count, s7type: count, address: count, data: bool%);
+event siemenss7_write_data_bit%(c: connection, area: count, db: count, s7type: count, address: count, data: bool%);

@@ -187,14 +187,17 @@ S7comm_Analyzer::ParseDataSendEvent(Item *item, const u_char *next_data, bool is
     EventHandlerPtr fs;
     EventHandlerPtr fu;
     EventHandlerPtr fr;
+    EventHandlerPtr fb;
     if (is_read) {
         fs = siemenss7_read_data_signed;
         fu = siemenss7_read_data_unsigned;
         fr = siemenss7_read_data_real;
+        fb = siemenss7_read_data_bit;
     } else {
         fs = siemenss7_write_data_signed;
         fu = siemenss7_write_data_unsigned;
         fr = siemenss7_write_data_real;
+        fb = siemenss7_write_data_bit;
     }
 
     /*Need to get the value for the data Item*/
@@ -239,8 +242,8 @@ S7comm_Analyzer::ParseDataSendEvent(Item *item, const u_char *next_data, bool is
                 for (int i = 0; i < item->count; i++) {
                     u_char data = next_data[4 + offset + i];
                     val_list *vl = CreateDataEventVal(item);
-                    vl->append(new Val(data, TYPE_COUNT));
-                    ConnectionEvent(fu, vl);
+                    vl->append(new Val(data, TYPE_BOOL));
+                    ConnectionEvent(fb, vl);
                 }
                 break;
             case S7COMM_TRANSPORT_SIZE_CHAR:

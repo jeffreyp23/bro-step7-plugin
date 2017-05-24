@@ -19,6 +19,7 @@
 
 #include <analyzer/protocol/tcp/TCP.h>
 #include <analyzer/Analyzer.h>
+#include <DebugLogger.h>
 #include <NetVar.h>
 #include <list>
 
@@ -160,7 +161,7 @@ protected:
     // create variable data event from item
 	val_list* CreateDataEventVal(Item* item);
     // parse data messages
-	const u_char* ParseDataSendEvent(Item* item, const u_char* next_data, bool is_read, int* err);
+	const u_char* ParseDataSendEvent(Item* item, const u_char* next_data, bool is_read, int* err, int count);
 	int ParseWriteItems(const u_char* data, int offset, int length, const u_char** next_data, int* err);
 	int ParseReadItems(list<item>* items, const u_char* data, int offset, int length, int* err);
     // parse S7 requests and responses (non user data message)
@@ -173,6 +174,7 @@ protected:
     void ParseCyclicData( const u_char* data, u_char fnmode, u_char fnsub, u_char seqnum); //error, length, dataref
     // list to match requests with responses
     list<Request>* requests;
+
 };
 }}
 #endif
